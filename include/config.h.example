@@ -2,59 +2,62 @@
 #define CONFIG_H
 
 // ============================================================================
-// WiFi Configuration (Fallback jika NVS Flash kosong)
+// Default / Fallback Configuration (Digunakan jika memori Flash/NVS masih kosong)
 // ============================================================================
-#define WIFI_SSID             "YOUR_WIFI_SSID"
-#define WIFI_PASSWORD         "YOUR_WIFI_PASSWORD"
+#define DEFAULT_WIFI_SSID             "YOUR_WIFI_SSID"
+#define DEFAULT_WIFI_PASSWORD         "YOUR_WIFI_PASSWORD"
 
-// ============================================================================
-// Backend Laravel API Configuration (Mode 3)
-// ============================================================================
-#define API_URL               "http://192.168.1.100:8000"
-#define DEVICE_TOKEN          "ESP32_DEFAULT_SECRET_TOKEN_12345"
-#define DEFAULT_SERVER_SYNC_ENABLED true
+// Mode 1: Default Telegram Configuration (Mode 1 Standalone)
+#define DEFAULT_TELEGRAM_BOT_TOKEN    ""
+#define DEFAULT_TELEGRAM_CHAT_ID      ""
 
-// ============================================================================
-// Telegram Bot Configuration (Mode 1 Standalone)
-// ============================================================================
-#define DEFAULT_TELEGRAM_BOT_TOKEN  ""
-#define DEFAULT_TELEGRAM_CHAT_ID    ""
+// Mode 3: Default Laravel API Configuration
+#define DEFAULT_API_URL               "http://192.168.1.100:8000"
+#define DEFAULT_DEVICE_TOKEN          "ESP32_DEFAULT_SECRET_TOKEN_12345"
+#define DEFAULT_SERVER_SYNC_ENABLED   true
+
+// Backward compatibility macros
+#define WIFI_SSID                     DEFAULT_WIFI_SSID
+#define WIFI_PASSWORD                 DEFAULT_WIFI_PASSWORD
+#define API_URL                       DEFAULT_API_URL
+#define DEVICE_TOKEN                  DEFAULT_DEVICE_TOKEN
 
 // ============================================================================
 // Hardware Setup / Trigger Pin (Tombol BOOT ESP32-S3 default GPIO 0)
+// Tekan dan tahan tombol BOOT selama 3 detik untuk membuka Web Config Portal
 // ============================================================================
-#define SETUP_TRIGGER_PIN     0
+#define SETUP_TRIGGER_PIN             0
 
 // ============================================================================
 // SIM800L Hardware Pin & Serial Configuration (ESP32-S3 default)
 // ============================================================================
-#define SIM800_RX             16  // ESP32 RX2 connected to SIM800L TX
-#define SIM800_TX             17  // ESP32 TX2 connected to SIM800L RX
-#define SIM800_BAUD           9600
+#define SIM800_RX                     16  // ESP32 RX2 connected to SIM800L TX
+#define SIM800_TX                     17  // ESP32 TX2 connected to SIM800L RX
+#define SIM800_BAUD                   9600
 
 // Control Hardware SIM800L (Opsional: gunakan -1 jika pin tidak disambungkan)
-#define SIM800_RST_PIN        7   // Pin Hardware Reset (Active LOW)
-#define SIM800_DTR_PIN        6   // Pin Sleep/Wake Control (HIGH=Sleep, LOW=Wake)
-#define SIM800_RI_PIN         5   // Pin Ring Indicator / SMS Interrupt (Active LOW)
+#define SIM800_RST_PIN                7   // Pin Hardware Reset (Active LOW)
+#define SIM800_DTR_PIN                6   // Pin Sleep/Wake Control (HIGH=Sleep, LOW=Wake)
+#define SIM800_RI_PIN                 5   // Pin Ring Indicator / SMS Interrupt (Active LOW)
 
 // Power Management Configuration
-#define GATEWAY_CPU_FREQ_MHZ  80  // Frekuensi CPU Standby (80 MHz hemat daya & dingin)
-
-// ============================================================================
-// OLED Display Configuration (SSD1306 0.96" I2C 128x64)
-// ============================================================================
-#define OLED_SDA              8
-#define OLED_SCL              9
-#define OLED_RESET            -1
-#define SCREEN_WIDTH          128
-#define SCREEN_HEIGHT         64
-#define OLED_I2C_ADDRESS      0x3C
-#define OLED_TIMEOUT          15000
+#define GATEWAY_CPU_FREQ_MHZ          80  // Frekuensi CPU Standby (80 MHz hemat daya & dingin)
 
 // ============================================================================
 // Timing Constants (in milliseconds)
 // ============================================================================
-#define HEARTBEAT_INTERVAL    10000 // Send heartbeat every 10 seconds for fast remote AT execution
-#define WIFI_CONNECT_TIMEOUT  15000
+#define HEARTBEAT_INTERVAL            10000 // Kirim heartbeat setiap 10 detik
+#define WIFI_CONNECT_TIMEOUT          15000 // 15 detik batas coba koneksi sebelum otomatis buka Web Portal
+
+// ============================================================================
+// OLED Display Configuration (SSD1306 0.96" I2C 128x64)
+// ============================================================================
+#define OLED_SDA                      8
+#define OLED_SCL                      9
+#define OLED_RESET                    -1    // Tidak ada pin reset eksternal (-1)
+#define SCREEN_WIDTH                  128   // Lebar layar OLED
+#define SCREEN_HEIGHT                 64    // Tinggi layar OLED
+#define OLED_I2C_ADDRESS              0x3C  // I2C address default untuk SSD1306
+#define OLED_TIMEOUT                  15000 // Timeout I2C dalam milidetik
 
 #endif // CONFIG_H
